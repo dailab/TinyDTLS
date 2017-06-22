@@ -36,7 +36,27 @@ dtls_ticks(dtls_tick_t *t) {
   *t = clock_time();
 }
 
-#else /* WITH_CONTIKI */
+//#else /* WITH_CONTIKI */
+#elif defined(RIOT_VERSION)
+
+#include "xtimer.h"
+
+timex_t dtls_clock_offset;
+
+void
+dtls_clock_init(void) {
+  xtimer_now_timex(&dtls_clock_offset);
+}
+
+void
+dtls_ticks(dtls_tick_t *t) {
+	timex_t now;
+  xtimer_now_timex(&now);
+  *t = (now.seconds - dtls_clock_offset.seconds) * DTLS_TICKS_PER_SECOND
+    + ((now.microseconds - dtls_clock_offset.microseconds) * DTLS_TICKS_PER_SECOND / 1000);
+}
+
+#else
 
 time_t dtls_clock_offset;
 
