@@ -33,6 +33,9 @@ DISTDIR=$(top_builddir)/tinydtls-0.8.6
 
 ifeq ("@WITH_CONTIKI@", "1")
 include Makefile.contiki
+else 
+ifneq ($(RIOTBASE), "")
+include Makefile.riot
 else
 ECC_OBJECTS:= $(patsubst %.c, %.o, $(ECC_SOURCES)) ecc_test.o
 PROGRAMS:= testecc testfield
@@ -67,6 +70,7 @@ clean:
 distclean:	clean
 	@rm -rf $(DISTDIR)
 	@rm -f *~ $(DISTDIR).tar.gz
+endif # RIOT
 endif # WITH_CONTIKI
 
 dist:	$(FILES)

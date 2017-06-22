@@ -16,6 +16,10 @@
 # the library's version
 VERSION:=0.8.6
 
+ifneq ($(RIOTBASE), "")
+include Makefile.riot
+else
+
 # tools
 
 SHELL = /bin/sh
@@ -65,3 +69,5 @@ install:	$(HEADERS)
 
 .gitignore:
 	echo "core\n*~\n*.[oa]\n*.gz\n*.cap\n$(PROGRAM)\n$(DISTDIR)\n.gitignore" >$@
+
+endif # RIOT
