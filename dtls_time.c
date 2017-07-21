@@ -53,7 +53,7 @@ dtls_ticks(dtls_tick_t *t) {
 	timex_t now;
   xtimer_now_timex(&now);
   *t = (now.seconds - dtls_clock_offset.seconds) * DTLS_TICKS_PER_SECOND
-    + ((now.microseconds - dtls_clock_offset.microseconds) * DTLS_TICKS_PER_SECOND / 1000);
+    + ((now.microseconds - dtls_clock_offset.microseconds) * DTLS_TICKS_PER_SECOND / 1000000);
 }
 
 #else
